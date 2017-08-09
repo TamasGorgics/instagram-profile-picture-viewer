@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Instagram profile picture viewer</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+	<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+	<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <ul class="nav navbar-nav">
+      <li class="active"><a class="navbar-brand" th:href="@{/}">Home</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="https://github.com/tgorgics/instagram-profile-picture-viewer"><span class="glyphicon glyphicon-cog"></span> Source</a></li>
+      <li><a href="http://tgorgics.github.io"><span class="glyphicon glyphicon-user"></span> About the creator</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+
+	 <div class="jumbotron text-center">
+	 	<h1>Instagram profile picture viewer</h1>
+	 </div>
+
+	 <div id="data_alert" class="alert alert-danger text-center"><small><strong>Error:</strong> User name field is required to get profile picture!</small></div>
+	 <form id="form" class="form-horizontal" action="#" th:action="@{/getPicture}" th:object="${user}" method="post">
+		 <div class="form-group">
+		 	<label class="control-label col-sm-6 text-right">User name:</label>
+		 	<input id="data_input" type="text" th:field="*{userName}" placeholder="User name" style="text-align:center;"/>
+		 </div>
+		 
+		 <div class="form-group text-center">
+		 	<input id="submitButton" class="btn btn-primary col-sm-4 col-sm-offset-4" type="button" value="Get profile picture!" />
+		 </div>
+	 </form> 
+</div>
+	
+	<div id="imageContainer"></div>
+		
+</body>
+
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#data_alert").hide();
+});
+$("#data_input").click(function() {
+	$("#data_alert").slideUp("slow");
+	$("#imageContainer").slideUp("slow");
+});
+var form = $("#form");
+var btn = $("#submitButton");
+btn.click(function() {
+	var data = $("#data_input").val();
+	if (data == '') {
+		$("#data_alert").slideDown("slow");
+		return false;
+	} else {
+		$.ajax({
+			url: form.attr("action"),
+			type: "post",
+			data: form.serialize(),
+			success: function(response) {
+				$("#imageContainer").html(response);
+				$("#imageContainer").hide().delay(600).slideDown("slow");
+			}
+		});
+	}
+});
+</script>
+
+</html>

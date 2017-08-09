@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+	<head>
+		<title>Error!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" href="/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css" />
+		<script src="/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js"></script>
+		<script src="/webjars/jquery/3.2.1/jquery.min.js"></script>
+	</head>
+	
+	<body>
+		<div class="container-fluid text-center">
+			<h1>Ooooops, something went wrong! :(</h1>
+			<h3>Couldn't get URL for profile picture for the given user.</h3>		
+			<a type="button" class="btn" th:href="@{/}">Back to Home Page</a>
+		</div>
+
+	</body>
+</html>
