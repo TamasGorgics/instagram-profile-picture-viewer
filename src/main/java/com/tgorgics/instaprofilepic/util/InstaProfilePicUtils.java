@@ -3,8 +3,8 @@ package com.tgorgics.instaprofilepic.util;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class InstaProfilePicUtils {
@@ -19,13 +19,13 @@ public class InstaProfilePicUtils {
         } catch (final MalformedURLException e) {
             return "";
         }
-        final Map<String, Object> jsonMap;
+        final JsonNode rootNode;
         try {
-            jsonMap = mapper.readValue(url, Map.class);
+            rootNode = mapper.readValue(url, JsonNode.class);
         } catch (final IOException e) {
             return "";
         }
-        return (String) jsonMap.get("profile_pic_url");
+        return rootNode.path("user").path("profile_pic_url").textValue().replaceAll("/s150x150", "");
     }
 
 }
